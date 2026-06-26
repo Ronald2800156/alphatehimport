@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpha Tech Import | Premium Gadgets Ecuador</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep:#05060f;--navy:#0b0e1f;--panel:#0f1228;--card:#131628;
+  --blue:#00aaff;--orange:#ff6b00;--gold:#ffaa00;--silver:#a8b4c8;--white:#e8eeff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--deep);color:var(--white);font-family:'Rajdhani',sans-serif;font-size:17px;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(5,6,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,170,255,0.15);display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:64px;}
+.nav-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:1rem;color:var(--blue);text-shadow:0 0 12px rgba(0,170,255,0.4);letter-spacing:2px;}
+.nav-logo span{color:var(--orange);}
+.nav-links{display:flex;gap:1.6rem;list-style:none;}
+.nav-links a{color:var(--silver);text-decoration:none;font-size:0.85rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:color .2s;}
+.nav-links a:hover{color:var(--blue);}
+.nav-cta{background:linear-gradient(135deg,var(--orange),var(--gold));color:#000!important;padding:7px 16px;border-radius:4px;font-weight:700!important;}
+
+/* HERO */
+.hero{position:relative;min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 5% 60px;overflow:hidden;}
+.hero-grid{position:absolute;inset:0;opacity:.06;background-image:linear-gradient(var(--blue) 1px,transparent 1px),linear-gradient(90deg,var(--blue) 1px,transparent 1px);background-size:40px 40px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 75%);}
+.hero-badge{display:inline-block;border:1px solid rgba(0,170,255,.3);padding:5px 16px;border-radius:20px;font-size:.75rem;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:20px;background:rgba(0,170,255,.05);}
+.hero h1{font-family:'Orbitron',monospace;font-size:clamp(2rem,6vw,4rem);font-weight:900;line-height:1.1;margin-bottom:14px;background:linear-gradient(135deg,var(--white) 0%,var(--blue) 50%,var(--orange) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:1.1rem;color:var(--silver);max-width:520px;line-height:1.6;margin-bottom:36px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+.btn-primary{background:linear-gradient(135deg,var(--orange),var(--gold));color:#000;font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;padding:13px 28px;border:none;border-radius:4px;cursor:pointer;text-decoration:none;letter-spacing:1px;transition:transform .2s,box-shadow .2s;display:inline-flex;align-items:center;gap:8px;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,107,0,.4);}
+.btn-secondary{border:1px solid rgba(0,170,255,.4);color:var(--blue);font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;padding:13px 28px;border-radius:4px;cursor:pointer;text-decoration:none;letter-spacing:1px;transition:background .2s;display:inline-flex;align-items:center;gap:8px;}
+.btn-secondary:hover{background:rgba(0,170,255,.08);}
+
+/* CATALOG SECTION */
+#catalogo{padding:80px 5%;}
+.catalog-header{text-align:center;margin-bottom:48px;}
+.section-label{font-size:.75rem;letter-spacing:4px;text-transform:uppercase;color:var(--orange);margin-bottom:10px;}
+.section-title{font-family:'Orbitron',monospace;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;color:var(--white);margin-bottom:12px;}
+.divider{width:60px;height:3px;background:linear-gradient(90deg,var(--blue),var(--orange));margin:12px auto 32px;border-radius:2px;}
+
+/* FILTER TABS */
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:40px;}
+.filter-btn{background:var(--panel);border:1px solid rgba(0,170,255,.15);color:var(--silver);padding:8px 18px;border-radius:20px;font-family:'Rajdhani',sans-serif;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:1px;}
+.filter-btn:hover,.filter-btn.active{background:rgba(0,170,255,.12);border-color:var(--blue);color:var(--blue);}
+
+/* PRODUCT GRID */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:24px;max-width:1200px;margin:0 auto;}
+
+.product-card{background:var(--card);border:1px solid rgba(0,170,255,.1);border-radius:10px;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;display:flex;flex-direction:column;}
+.product-card:hover{transform:translateY(-5px);border-color:rgba(0,170,255,.35);box-shadow:0 10px 36px rgba(0,170,255,.1);}
+.product-card.hidden{display:none;}
+
+.product-img-wrap{position:relative;background:#0a0c1e;height:200px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.product-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .3s;}
+.product-card:hover .product-img-wrap img{transform:scale(1.05);}
+.product-badge{position:absolute;top:10px;left:10px;background:linear-gradient(135deg,var(--orange),var(--gold));color:#000;font-size:.65rem;font-weight:700;padding:3px 8px;border-radius:3px;letter-spacing:1px;font-family:'Orbitron',monospace;}
+
+.product-info{padding:16px;display:flex;flex-direction:column;flex:1;}
+.product-cat{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:6px;}
+.product-name{font-family:'Orbitron',monospace;font-size:.85rem;font-weight:700;color:var(--white);margin-bottom:8px;line-height:1.3;}
+.product-desc{font-size:.82rem;color:var(--silver);line-height:1.5;margin-bottom:14px;flex:1;}
+.product-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;}
+.product-price{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--gold);}
+.product-price small{font-size:.65rem;color:var(--silver);font-family:'Rajdhani',sans-serif;display:block;font-weight:400;}
+.buy-btn{background:linear-gradient(135deg,var(--orange),var(--gold));color:#000;font-size:.72rem;font-weight:700;padding:8px 14px;border-radius:4px;text-decoration:none;font-family:'Orbitron',monospace;letter-spacing:.5px;transition:box-shadow .2s;white-space:nowrap;}
+.buy-btn:hover{box-shadow:0 4px 16px rgba(255,107,0,.4);}
+
+/* PROMO CANTIDAD */
+.promo-qty{background:rgba(255,170,0,.06);border:1px solid rgba(255,170,0,.25);border-radius:6px;padding:8px 10px;margin:8px 0 12px;}
+.promo-qty-title{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:7px;font-weight:700;}
+.promo-qty-row{display:flex;gap:5px;}
+.pqb{flex:1;background:var(--panel);border:1px solid rgba(255,170,0,.2);color:var(--silver);padding:6px 4px;border-radius:4px;font-size:.68rem;font-family:'Orbitron',monospace;cursor:pointer;text-align:center;transition:all .2s;line-height:1.4;}
+.pqb span{display:block;font-size:.58rem;color:var(--silver);font-family:'Rajdhani',sans-serif;}
+.pqb:hover,.pqb.sel{background:rgba(255,170,0,.18);border-color:var(--gold);color:var(--gold);}
+.pqb.sel span{color:var(--gold);}
+
+/* EMPTY STATE */
+#empty-state{text-align:center;padding:60px 20px;color:var(--silver);display:block;}
+#empty-state .empty-icon{font-size:3rem;margin-bottom:16px;display:block;}
+#empty-state p{font-size:.9rem;line-height:1.6;}
+
+/* CARD ADMIN CONTROLS */
+.card-controls{display:none;position:absolute;top:8px;right:8px;gap:6px;z-index:10;}
+.admin-mode .card-controls{display:flex;}
+.card-btn{background:rgba(5,6,15,.85);border:1px solid rgba(0,170,255,.2);color:var(--silver);width:30px;height:30px;border-radius:4px;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.card-btn.del:hover{background:rgba(255,60,60,.2);border-color:#ff3c3c;color:#ff3c3c;}
+.card-btn.edit:hover{background:rgba(0,170,255,.15);border-color:var(--blue);color:var(--blue);}
+
+/* EDIT MODAL */
+#edit-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:1000;align-items:center;justify-content:center;}
+#edit-modal.open{display:flex;}
+.edit-box{background:var(--navy);border:1px solid rgba(0,170,255,.2);border-radius:12px;padding:28px;width:340px;max-width:92vw;}
+.edit-box h3{font-family:'Orbitron',monospace;font-size:.9rem;color:var(--blue);margin-bottom:16px;}
+.edit-box .admin-field{margin-bottom:12px;}
+.edit-actions{display:flex;gap:10px;margin-top:16px;}
+.edit-save{flex:1;background:linear-gradient(135deg,var(--orange),var(--gold));color:#000;font-family:'Orbitron',monospace;font-size:.75rem;font-weight:700;padding:10px;border:none;border-radius:6px;cursor:pointer;}
+.edit-cancel{background:var(--panel);border:1px solid rgba(0,170,255,.15);color:var(--silver);font-family:'Orbitron',monospace;font-size:.75rem;padding:10px 16px;border-radius:6px;cursor:pointer;}
+
+/* DROPI INFO BANNER */
+.dropi-banner{background:linear-gradient(135deg,rgba(0,170,255,.07),rgba(255,107,0,.07));border:1px solid rgba(0,170,255,.15);border-radius:12px;padding:36px 40px;max-width:900px;margin:60px auto 0;display:flex;gap:40px;align-items:center;flex-wrap:wrap;}
+.dropi-banner-icon{font-size:3.5rem;flex-shrink:0;}
+.dropi-tag{display:inline-block;background:linear-gradient(135deg,var(--orange),var(--gold));color:#000;font-family:'Orbitron',monospace;font-size:.65rem;font-weight:700;padding:3px 10px;border-radius:3px;letter-spacing:2px;margin-bottom:10px;}
+.dropi-banner h3{font-family:'Orbitron',monospace;font-size:1.1rem;color:var(--white);margin-bottom:8px;}
+.dropi-banner p{color:var(--silver);font-size:.9rem;line-height:1.6;}
+
+/* WHY */
+#por-que{padding:80px 5%;background:var(--navy);text-align:center;}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:960px;margin:0 auto;}
+.why-card{background:var(--panel);border:1px solid rgba(255,107,0,.1);border-radius:8px;padding:28px 20px;transition:border-color .2s;}
+.why-card:hover{border-color:rgba(255,107,0,.3);}
+.why-icon{font-size:2rem;margin-bottom:12px;display:block;}
+.why-title{font-family:'Orbitron',monospace;font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.why-text{font-size:.83rem;color:var(--silver);line-height:1.5;}
+
+/* CONTACT */
+#contacto{padding:80px 5%;text-align:center;}
+.contact-box{max-width:520px;margin:0 auto;background:var(--panel);border:1px solid rgba(0,170,255,.15);border-radius:12px;padding:44px 36px;}
+.wa-btn{display:inline-flex;align-items:center;gap:12px;background:#25D366;color:#fff;font-family:'Orbitron',monospace;font-size:.95rem;font-weight:700;padding:15px 32px;border-radius:8px;text-decoration:none;letter-spacing:1px;transition:transform .2s,box-shadow .2s;margin-top:20px;}
+.wa-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(37,211,102,.35);}
+.wa-icon{width:26px;height:26px;fill:#fff;}
+
+/* FOOTER */
+footer{border-top:1px solid rgba(0,170,255,.1);padding:28px 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.footer-logo{font-family:'Orbitron',monospace;font-size:.85rem;font-weight:900;color:var(--blue);letter-spacing:2px;}
+.footer-logo span{color:var(--orange);}
+.footer-links{display:flex;gap:20px;list-style:none;}
+.footer-links a{color:var(--silver);text-decoration:none;font-size:.8rem;transition:color .2s;}
+.footer-links a:hover{color:var(--white);}
+.footer-copy{font-size:.75rem;color:rgba(168,180,200,.45);}
+
+/* ADMIN PANEL */
+#admin-toggle{position:fixed;bottom:24px;right:24px;z-index:999;background:linear-gradient(135deg,var(--orange),var(--gold));color:#000;font-family:'Orbitron',monospace;font-size:.72rem;font-weight:700;padding:12px 18px;border-radius:50px;border:none;cursor:pointer;letter-spacing:1px;box-shadow:0 4px 20px rgba(255,107,0,.5);transition:transform .2s;}
+#admin-toggle:hover{transform:scale(1.05);}
+
+#admin-panel{display:none;position:fixed;top:0;right:0;bottom:0;width:360px;max-width:95vw;background:var(--navy);border-left:1px solid rgba(0,170,255,.2);z-index:998;overflow-y:auto;padding:24px;box-shadow:-8px 0 32px rgba(0,0,0,.5);}
+#admin-panel.open{display:block;}
+.admin-title{font-family:'Orbitron',monospace;font-size:1rem;font-weight:700;color:var(--blue);margin-bottom:4px;}
+.admin-sub{font-size:.78rem;color:var(--silver);margin-bottom:20px;}
+.admin-close{float:right;background:none;border:none;color:var(--silver);font-size:1.2rem;cursor:pointer;margin-top:-4px;}
+.admin-close:hover{color:var(--white);}
+
+.admin-field{margin-bottom:14px;}
+.admin-field label{display:block;font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--silver);margin-bottom:6px;}
+.admin-field input,.admin-field select,.admin-field textarea{width:100%;background:var(--panel);border:1px solid rgba(0,170,255,.15);color:var(--white);font-family:'Rajdhani',sans-serif;font-size:.88rem;padding:9px 12px;border-radius:6px;outline:none;transition:border-color .2s;}
+.admin-field input:focus,.admin-field select:focus,.admin-field textarea:focus{border-color:rgba(0,170,255,.5);}
+.admin-field select option{background:var(--panel);}
+.admin-field textarea{resize:vertical;min-height:70px;}
+
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;}
+.badge-opt{background:var(--panel);border:1px solid rgba(0,170,255,.15);color:var(--silver);padding:5px 12px;border-radius:20px;font-size:.75rem;cursor:pointer;transition:all .2s;}
+.badge-opt.selected{background:rgba(255,107,0,.15);border-color:var(--orange);color:var(--gold);}
+.badge-opt-none.selected{background:rgba(0,170,255,.1);border-color:var(--blue);color:var(--blue);}
+
+.img-preview{width:100%;height:110px;object-fit:cover;border-radius:6px;margin-top:8px;display:none;border:1px solid rgba(0,170,255,.15);}
+
+.admin-add-btn{width:100%;background:linear-gradient(135deg,var(--orange),var(--gold));color:#000;font-family:'Orbitron',monospace;font-size:.78rem;font-weight:700;padding:13px;border:none;border-radius:6px;cursor:pointer;letter-spacing:1px;margin-top:6px;transition:box-shadow .2s;}
+.admin-add-btn:hover{box-shadow:0 4px 18px rgba(255,107,0,.4);}
+
+.admin-divider{border:none;border-top:1px solid rgba(0,170,255,.1);margin:20px 0;}
+
+.product-list-admin{display:flex;flex-direction:column;gap:10px;}
+.product-list-item{background:var(--panel);border:1px solid rgba(0,170,255,.08);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;}
+.product-list-item img{width:44px;height:44px;object-fit:cover;border-radius:4px;flex-shrink:0;}
+.product-list-info{flex:1;min-width:0;}
+.product-list-name{font-size:.78rem;font-weight:700;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.product-list-price{font-size:.72rem;color:var(--gold);}
+.product-list-del{background:none;border:none;color:rgba(168,180,200,.4);cursor:pointer;font-size:1rem;flex-shrink:0;padding:2px;}
+.product-list-del:hover{color:#ff4444;}
+
+.admin-empty{text-align:center;color:var(--silver);font-size:.8rem;padding:20px 0;}
+
+/* SCANLINE */
+@keyframes scanline{from{transform:translateY(-100%)}to{transform:translateY(100vh)}}
+.scanline{position:fixed;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(0,170,255,.08),transparent);pointer-events:none;z-index:0;animation:scanline 10s linear infinite;}
+
+/* MOBILE */
+@media(max-width:700px){
+  .nav-links{display:none;}
+  .dropi-banner{flex-direction:column;gap:20px;padding:28px 20px;}
+  footer{flex-direction:column;text-align:center;}
+  .contact-box{padding:28px 18px;}
+}
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ALPHA TECH <span>IMPORT</span></div>
+  <ul class="nav-links">
+    <li><a href="#catalogo">Productos</a></li>
+    <li><a href="#por-que">Nosotros</a></li>
+    <li><a href="#contacto" class="nav-cta">Cotizar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-badge">✦ Importación Directa · Guayaquil, Ecuador ✦</div>
+  <h1>Gadgets premium<br>al mejor precio</h1>
+  <p class="hero-sub">Los mejores productos tech y del hogar importados. Pedidos por WhatsApp, envíos a todo Ecuador.</p>
+  <div class="hero-btns">
+    <a href="https://wa.me/593962631670?text=Hola!%20Vi%20su%20página%20y%20quiero%20hacer%20un%20pedido." class="btn-primary">💬 Hacer pedido</a>
+    <a href="#catalogo" class="btn-secondary">Ver catálogo →</a>
+  </div>
+</section>
+
+<!-- CATÁLOGO -->
+<section id="catalogo">
+  <div class="catalog-header">
+    <div class="section-label">Catálogo</div>
+    <h2 class="section-title">Nuestros Productos</h2>
+    <div class="divider"></div>
+    <p style="color:var(--silver);font-size:.95rem;">Haz clic en "Pedir" y te atendemos por WhatsApp de inmediato</p>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterProducts('todos')">Todos</button>
+    <button class="filter-btn" onclick="filterProducts('audio')">🎧 Audio</button>
+    <button class="filter-btn" onclick="filterProducts('smartwatch')">⌚ Smartwatch</button>
+    <button class="filter-btn" onclick="filterProducts('hogar')">🏠 Hogar</button>
+    <button class="filter-btn" onclick="filterProducts('gaming')">🎮 Gaming</button>
+    <button class="filter-btn" onclick="filterProducts('accesorios')">📱 Accesorios</button>
+  </div>
+
+  <!-- PRODUCTOS -->
+  <div class="products-grid" id="productsGrid">
+
+  <div id="empty-state">
+    <span class="empty-icon">📦</span>
+    <p>Aún no tienes productos.<br>Haz clic en <strong style="color:var(--orange)">⚙ Admin</strong> para agregar el primero.</p>
+  </div>
+
+  </div><!-- end grid -->
+
+<!-- EDIT MODAL -->
+<div id="edit-modal">
+  <div class="edit-box">
+    <h3>✏ Editar Producto</h3>
+    <div class="admin-field"><label>Nombre</label><input type="text" id="e-name"></div>
+    <div class="admin-field">
+      <label>💰 Precios por cantidad</label>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+        <div><div style="font-size:.68rem;color:var(--silver);margin-bottom:4px;text-align:center;">1 und</div><input type="number" id="e-p1" step="0.01" min="0" style="text-align:center;"></div>
+        <div><div style="font-size:.68rem;color:var(--gold);margin-bottom:4px;text-align:center;">2 und</div><input type="number" id="e-p2" step="0.01" min="0" style="text-align:center;"></div>
+        <div><div style="font-size:.68rem;color:var(--orange);margin-bottom:4px;text-align:center;">3 und</div><input type="number" id="e-p3" step="0.01" min="0" style="text-align:center;"></div>
+      </div>
+    </div>
+    <div class="admin-field"><label>Descripción</label><textarea id="e-desc"></textarea></div>
+    <div class="edit-actions">
+      <button class="edit-cancel" onclick="closeEdit()">Cancelar</button>
+      <button class="edit-save" onclick="saveEdit()">Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+  <!-- DROPI BANNER -->
+  <div class="dropi-banner">
+    <div class="dropi-banner-icon">📦</div>
+    <div>
+      <div class="dropi-tag">ENVÍO GARANTIZADO</div>
+      <h3>Envíos garantizados a todo Ecuador</h3>
+      <p>Todos nuestros productos son importados directamente. Recibe en la comodidad de tu hogar con seguimiento en tiempo real a todo Ecuador.</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- POR QUÉ -->
+<section id="por-que">
+  <div class="section-label">¿Por qué elegirnos?</div>
+  <h2 class="section-title">Alpha Tech Import</h2>
+  <div class="divider"></div>
+  <div class="why-grid">
+    <div class="why-card"><span class="why-icon">🚀</span><div class="why-title">Envío Rápido</div><div class="why-text">Despacho en 24–48h a todo Ecuador.</div></div>
+    <div class="why-card"><span class="why-icon">✅</span><div class="why-title">Productos Verificados</div><div class="why-text">Solo vendemos lo que garantizamos. Calidad comprobada.</div></div>
+    <div class="why-card"><span class="why-icon">💬</span><div class="why-title">Atención Personalizada</div><div class="why-text">Te asesoramos por WhatsApp antes y después de tu compra.</div></div>
+    <div class="why-card"><span class="why-icon">💰</span><div class="why-title">Precios Directos</div><div class="why-text">Importación directa, sin intermediarios. El mejor precio.</div></div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-label">Contáctanos</div>
+  <h2 class="section-title">¿Listo para pedir?</h2>
+  <div class="divider"></div>
+  <div class="contact-box">
+    <p style="color:var(--silver);line-height:1.7;">Escríbenos por WhatsApp. Te asesoramos, te damos el precio final y coordinamos tu pedido.</p>
+    <a href="https://wa.me/593962631670?text=Hola!%20Vi%20su%20página%20y%20quiero%20hacer%20un%20pedido." class="wa-btn" target="_blank" rel="noopener">
+      <svg class="wa-icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Chatear en WhatsApp
+    </a>
+    <p style="margin-top:14px;font-size:.8rem;color:var(--silver);">📍 Guayaquil, Ecuador · Envíos a todo el país</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ALPHA TECH <span>IMPORT</span></div>
+  <ul class="footer-links">
+    <li><a href="#catalogo">Productos</a></li>
+    <li><a href="#por-que">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Alpha Tech Import · Guayaquil, Ecuador</div>
+</footer>
+
+<!-- ADMIN TOGGLE BUTTON -->
+<button id="admin-toggle" onclick="toggleAdmin()">⚙ Admin</button>
+
+<!-- ADMIN PANEL -->
+<div id="admin-panel">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px;">
+    <div>
+      <div class="admin-title">Agregar Producto</div>
+      <div class="admin-sub">Llena el formulario y haz clic en Agregar</div>
+    </div>
+    <button class="admin-close" onclick="toggleAdmin()">✕</button>
+  </div>
+
+  <div class="admin-field">
+    <label>Nombre del producto *</label>
+    <input type="text" id="a-name" placeholder="Ej: Audífonos Bluetooth Pro">
+  </div>
+
+  <div class="admin-field">
+    <label>Categoría *</label>
+    <select id="a-cat">
+      <option value="audio">🎧 Audio</option>
+      <option value="smartwatch">⌚ Smartwatch</option>
+      <option value="hogar">🏠 Hogar</option>
+      <option value="gaming">🎮 Gaming</option>
+      <option value="accesorios">📱 Accesorios</option>
+    </select>
+  </div>
+
+  <div class="admin-field">
+    <label>💰 Precios por cantidad *</label>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+      <div>
+        <div style="font-size:.68rem;color:var(--silver);margin-bottom:4px;text-align:center;">1 unidad</div>
+        <input type="number" id="a-price1" placeholder="$0.00" step="0.01" min="0" style="text-align:center;">
+      </div>
+      <div>
+        <div style="font-size:.68rem;color:var(--gold);margin-bottom:4px;text-align:center;">2 unidades</div>
+        <input type="number" id="a-price2" placeholder="$0.00" step="0.01" min="0" style="text-align:center;">
+      </div>
+      <div>
+        <div style="font-size:.68rem;color:var(--orange);margin-bottom:4px;text-align:center;">3 unidades</div>
+        <input type="number" id="a-price3" placeholder="$0.00" step="0.01" min="0" style="text-align:center;">
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-field">
+    <label>Descripción</label>
+    <textarea id="a-desc" placeholder="Ej: Sonido HD, cancelación de ruido, 30h batería..."></textarea>
+  </div>
+
+  <div class="admin-field">
+    <label>URL de imagen</label>
+    <input type="text" id="a-img" placeholder="https://..." oninput="previewImg(this.value)">
+    <img id="a-img-preview" class="img-preview" alt="Vista previa">
+  </div>
+
+  <div class="admin-field">
+    <label>Etiqueta (opcional)</label>
+    <div class="badge-row">
+      <span class="badge-opt badge-opt-none selected" onclick="selectBadge(this,'')">Sin etiqueta</span>
+      <span class="badge-opt" onclick="selectBadge(this,'HOT')">🔥 HOT</span>
+      <span class="badge-opt" onclick="selectBadge(this,'NUEVO')">✨ NUEVO</span>
+      <span class="badge-opt" onclick="selectBadge(this,'OFERTA')">💰 OFERTA</span>
+      <span class="badge-opt" onclick="selectBadge(this,'TOP')">⭐ TOP</span>
+    </div>
+  </div>
+
+  <button class="admin-add-btn" onclick="addProduct()">+ Agregar producto al catálogo</button>
+
+  <hr class="admin-divider">
+
+  <div style="font-size:.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--silver);margin-bottom:12px;">Productos agregados</div>
+  <div class="product-list-admin" id="adminProductList">
+    <div class="admin-empty" id="adminEmpty">Aún no has agregado productos.</div>
+  </div>
+</div>
+
+<script>
+function filterProducts(cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.product-card').forEach(card => {
+    if (cat === 'todos' || card.dataset.cat === cat) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+// ADMIN
+let selectedBadge = '';
+let addedProducts = [];
+
+function toggleAdmin() {
+  const panel = document.getElementById('admin-panel');
+  panel.classList.toggle('open');
+  document.body.classList.toggle('admin-mode', panel.classList.contains('open'));
+}
+
+function selectBadge(el, val) {
+  document.querySelectorAll('.badge-opt').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedBadge = val;
+}
+
+function previewImg(url) {
+  const prev = document.getElementById('a-img-preview');
+  if (url.startsWith('http')) {
+    prev.src = url;
+    prev.style.display = 'block';
+    prev.onerror = () => { prev.style.display = 'none'; };
+  } else {
+    prev.style.display = 'none';
+  }
+}
+
+function catLabel(cat) {
+  const map = { audio:'Audio', smartwatch:'Smartwatch', hogar:'Hogar', gaming:'Gaming', accesorios:'Accesorios' };
+  return map[cat] || cat;
+}
+function catEmoji(cat) {
+  const map = { audio:'🎧', smartwatch:'⌚', hogar:'🏠', gaming:'🎮', accesorios:'📱' };
+  return map[cat] || '';
+}
+
+function addProduct() {
+  const name   = document.getElementById('a-name').value.trim();
+  const cat    = document.getElementById('a-cat').value;
+  const price1 = parseFloat(document.getElementById('a-price1').value);
+  const price2 = parseFloat(document.getElementById('a-price2').value);
+  const price3 = parseFloat(document.getElementById('a-price3').value);
+  const desc   = document.getElementById('a-desc').value.trim();
+  const img    = document.getElementById('a-img').value.trim();
+
+  if (!name) { alert('Escribe el nombre del producto.'); return; }
+  if (isNaN(price1) || price1 <= 0) { alert('Escribe el precio para 1 unidad.'); return; }
+  if (isNaN(price2) || price2 <= 0) { alert('Escribe el precio para 2 unidades.'); return; }
+  if (isNaN(price3) || price3 <= 0) { alert('Escribe el precio para 3 unidades.'); return; }
+
+  // Hide empty state
+  document.getElementById('empty-state').style.display = 'none';
+
+  const imgSrc = img || 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=80';
+  const waText = encodeURIComponent(`Hola! Quiero 1 unidad de ${name} - $${price1.toFixed(2)}`);
+  const waLink = `https://wa.me/593962631670?text=${waText}`;
+
+  const badgeHtml = selectedBadge ? `<span class="product-badge">${selectedBadge}</span>` : '';
+
+  const card = document.createElement('div');
+  card.className = 'product-card';
+  card.dataset.cat = cat;
+  card.dataset.p1 = price1.toFixed(2);
+  card.dataset.p2 = price2.toFixed(2);
+  card.dataset.p3 = price3.toFixed(2);
+  card.style.position = 'relative';
+  card.innerHTML = `
+    <div class="card-controls">
+      <button class="card-btn edit" onclick="openEdit(this)" title="Editar">✏</button>
+      <button class="card-btn del" onclick="deleteCard(this)" title="Eliminar">🗑</button>
+    </div>
+    <div class="product-img-wrap">
+      <img src="${imgSrc}" alt="${name}">
+      ${badgeHtml}
+    </div>
+    <div class="product-info">
+      <div class="product-cat">${catEmoji(cat)} ${catLabel(cat)}</div>
+      <div class="product-name">${name}</div>
+      <div class="product-desc">${desc || 'Producto disponible. Contáctanos para más info.'}</div>
+      <div class="promo-qty">
+        <div class="promo-qty-title">🔥 Promo por cantidad</div>
+        <div class="promo-qty-row">
+          <div class="pqb" onclick="selectQty(this,1)">1 und<span>$${price1.toFixed(2)}</span></div>
+          <div class="pqb" onclick="selectQty(this,2)">2 und<span>$${price2.toFixed(2)}</span></div>
+          <div class="pqb" onclick="selectQty(this,3)">3 und<span>$${price3.toFixed(2)}</span></div>
+        </div>
+      </div>
+      <div class="product-footer">
+        <div class="product-price">$${price1.toFixed(2)}<small>Envío incluido</small></div>
+        <a href="${waLink}" class="buy-btn" target="_blank">Pedir</a>
+      </div>
+    </div>`;
+
+  document.getElementById('productsGrid').appendChild(card);
+
+  const activeBtn = document.querySelector('.filter-btn.active');
+  const activeCat = activeBtn ? activeBtn.getAttribute('onclick').match(/'([^']+)'/)[1] : 'todos';
+  if (activeCat !== 'todos' && activeCat !== cat) card.classList.add('hidden');
+
+  const id = Date.now();
+  addedProducts.push({ id, name, price: price1, imgSrc, card });
+  renderAdminList();
+
+  document.getElementById('a-name').value = '';
+  document.getElementById('a-price1').value = '';
+  document.getElementById('a-price2').value = '';
+  document.getElementById('a-price3').value = '';
+  document.getElementById('a-desc').value = '';
+  document.getElementById('a-img').value = '';
+  document.getElementById('a-img-preview').style.display = 'none';
+  selectedBadge = '';
+  document.querySelectorAll('.badge-opt').forEach(b => b.classList.remove('selected'));
+  document.querySelector('.badge-opt-none').classList.add('selected');
+
+  const btn = document.querySelector('.admin-add-btn');
+  btn.textContent = '✓ Producto agregado!';
+  btn.style.background = '#1a8a3a';
+  setTimeout(() => {
+    btn.textContent = '+ Agregar producto al catálogo';
+    btn.style.background = '';
+  }, 2000);
+}
+
+function renderAdminList() {
+  const list = document.getElementById('adminProductList');
+  const empty = document.getElementById('adminEmpty');
+  if (addedProducts.length === 0) {
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+  }
+  // Remove existing items
+  list.querySelectorAll('.product-list-item').forEach(el => el.remove());
+  addedProducts.forEach(p => {
+    const item = document.createElement('div');
+    item.className = 'product-list-item';
+    item.innerHTML = `
+      <img src="${p.imgSrc}" alt="${p.name}" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?w=80&q=60'">
+      <div class="product-list-info">
+        <div class="product-list-name">${p.name}</div>
+        <div class="product-list-price">$${p.price.toFixed(2)}</div>
+      </div>
+      <button class="product-list-del" onclick="deleteProduct(${p.id})" title="Eliminar">🗑</button>`;
+    list.appendChild(item);
+  });
+}
+
+function deleteProduct(id) {
+  if (!confirm('¿Eliminar este producto?')) return;
+  const idx = addedProducts.findIndex(p => p.id === id);
+  if (idx !== -1) {
+    addedProducts[idx].card.remove();
+    addedProducts.splice(idx, 1);
+    renderAdminList();
+  }
+}
+
+// PROMO POR CANTIDAD
+function selectQty(el, qty) {
+  el.closest('.promo-qty-row').querySelectorAll('.pqb').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+
+  const card = el.closest('.product-card');
+  const buyBtn = card.querySelector('.buy-btn');
+  const productName = card.querySelector('.product-name').textContent;
+
+  // Leer precio del botón seleccionado directamente
+  const precioTexto = el.querySelector('span').textContent.replace('$','');
+  const precio = parseFloat(precioTexto);
+
+  const texto = qty === 1
+    ? `Hola! Quiero 1 unidad de ${productName} - $${precio.toFixed(2)}`
+    : `Hola! Quiero ${qty} unidades de ${productName} - PROMO $${precio.toFixed(2)} (${qty}x unidades)`;
+  buyBtn.href = `https://wa.me/593962631670?text=${encodeURIComponent(texto)}`;
+
+  const priceEl = card.querySelector('.product-price');
+  priceEl.innerHTML = `$${precio.toFixed(2)}<small>${qty === 1 ? 'Envío incluido' : qty + ' unidades · Envío incluido'}</small>`;
+}
+
+// ELIMINAR TARJETA DIRECTO
+function deleteCard(btn) {
+  if (!confirm('¿Eliminar este producto?')) return;
+  const card = btn.closest('.product-card');
+  // Also remove from addedProducts array
+  const idx = addedProducts.findIndex(p => p.card === card);
+  if (idx !== -1) addedProducts.splice(idx, 1);
+  card.remove();
+  renderAdminList();
+  // Show empty state if no products left
+  if (document.querySelectorAll('.product-card').length === 0) {
+    document.getElementById('empty-state').style.display = 'block';
+  }
+}
+
+// EDITAR TARJETA
+let editingCard = null;
+function openEdit(btn) {
+  editingCard = btn.closest('.product-card');
+  document.getElementById('e-name').value = editingCard.querySelector('.product-name').textContent;
+  document.getElementById('e-desc').value = editingCard.querySelector('.product-desc').textContent;
+  const spans = editingCard.querySelectorAll('.pqb span');
+  document.getElementById('e-p1').value = spans[0] ? spans[0].textContent.replace('$','') : '';
+  document.getElementById('e-p2').value = spans[1] ? spans[1].textContent.replace('$','') : '';
+  document.getElementById('e-p3').value = spans[2] ? spans[2].textContent.replace('$','') : '';
+  document.getElementById('edit-modal').classList.add('open');
+}
+
+function closeEdit() {
+  document.getElementById('edit-modal').classList.remove('open');
+  editingCard = null;
+}
+
+function saveEdit() {
+  if (!editingCard) return;
+  const name = document.getElementById('e-name').value.trim();
+  const p1 = parseFloat(document.getElementById('e-p1').value);
+  const p2 = parseFloat(document.getElementById('e-p2').value);
+  const p3 = parseFloat(document.getElementById('e-p3').value);
+  const desc = document.getElementById('e-desc').value.trim();
+
+  if (!name || isNaN(p1) || isNaN(p2) || isNaN(p3)) { alert('Completa todos los campos.'); return; }
+
+  editingCard.querySelector('.product-name').textContent = name;
+  editingCard.querySelector('.product-desc').textContent = desc;
+  const spans = editingCard.querySelectorAll('.pqb span');
+  spans[0].textContent = `$${p1.toFixed(2)}`;
+  spans[1].textContent = `$${p2.toFixed(2)}`;
+  spans[2].textContent = `$${p3.toFixed(2)}`;
+  editingCard.dataset.p1 = p1.toFixed(2);
+  editingCard.dataset.p2 = p2.toFixed(2);
+  editingCard.dataset.p3 = p3.toFixed(2);
+  editingCard.querySelector('.product-price').innerHTML = `$${p1.toFixed(2)}<small>Envío incluido</small>`;
+
+  // Update WA link
+  const waLink = `https://wa.me/593962631670?text=${encodeURIComponent(`Hola! Quiero 1 unidad de ${name} - $${p1.toFixed(2)}`)}`;
+  editingCard.querySelector('.buy-btn').href = waLink;
+
+  closeEdit();
+}
+</script>
+</body>
+</html>
